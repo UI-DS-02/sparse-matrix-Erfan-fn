@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="javadocs">
+    <CLASSES>
+      <root url="jar://D:/Game files/csv.jar.zip!/" />
+      <root url="jar://$USER_HOME$/Downloads/opencsv-5.8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Downloads/javadocs.zip!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
