@@ -1,8 +1,3 @@
-import com.opencsv.CSVWriter;
-import com.opencsv.ICSVWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 //--------------
 public class Matrix{
     private SinglyLinkedList[]rowList;
@@ -112,7 +107,11 @@ public class Matrix{
     {
         for (int i = 0; i < this.rowList.length; i++) {
             for (int j = 0; j <this.rowList[i].Size() ; j++) {
-                if (this.rowList[i].getInRowWithCol(j).getElement()==value){return true;}
+                if (this.rowList[i].getInRowWithCol(j)!=null)
+                {
+
+                    if (this.rowList[i].getInRowWithCol(j).getElement()==value){return true;}
+                }
             }
         }
         return false;
@@ -513,7 +512,6 @@ public class Matrix{
     public String compactToString()
     {
         StringBuilder result = new StringBuilder();
-        String[] output;
 
         for (int i = 0; i <this.compactSize ; i++) {
             for (int j = 0; j <3 ; j++) {
@@ -532,29 +530,6 @@ public class Matrix{
                     result.append('\n');
                 }
             }
-            output=result.toString().split(",");
-            // first create file object for file placed at location
-            // specified by filepath
-
-            try {
-                // create CSVWriter object filewriter object as parameter
-                CSVWriter writer = new CSVWriter(new FileWriter("output.csv"), ICSVWriter.DEFAULT_SEPARATOR,
-                        CSVWriter.NO_QUOTE_CHARACTER,
-                        '"',
-                        "\"\n");
-
-                // create a List which contains String array
-
-                writer.writeNext(output);
-
-                // closing writer connection
-                writer.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
         }
         return result.toString();
     }
@@ -565,8 +540,16 @@ public class Matrix{
         for (int i = 0; i <this.rowSize ; i++) {
             for (int j = 0; j <ColSize ; j++) {
                 result.append(sparseMatrix[i][j]);
+                if (j!=ColSize-1)
+                {
+                    result.append(",");
+                }
             }
-            result.append('\n');
+
+            if (i!=rowSize-1){
+                result.append('\n');
+            }
+
         }
         return result.toString();
     }
