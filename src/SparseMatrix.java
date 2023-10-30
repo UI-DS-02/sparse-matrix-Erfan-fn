@@ -61,6 +61,8 @@ public class SparseMatrix {
         String result;
         result=matrix.compactToString();
 
+        String resultCompact=matrix.compactToString();
+
         //write the output into the csv file
 
 
@@ -68,6 +70,7 @@ public class SparseMatrix {
         System.out.println(result);
         // first create file object for file placed at location
         // specified by filepath
+        String[] outputCompact = resultCompact.toString().split("\n");
 
         try {
             // create CSVWriter object filewriter object as parameter
@@ -77,16 +80,43 @@ public class SparseMatrix {
                     "\"\n");
 
             // create a List which contains String array
+            CSVWriter writer = new CSVWriter(new FileWriter("outputCompact.csv"), ',',
+                    CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
 
             writer.writeNext(output);
+            for (String line1 : outputCompact) {
+                String[] data = line1.split(",");
+                writer.writeNext(data);
+            }
 
             // closing writer connection
             writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         catch (IOException e) {
+
+        String resultSparse=matrix.sparseToString();
+
+        String[] outputSparse = resultSparse.toString().split("\n");
+
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter("outputSparse.csv"), ',',
+                    CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            for (String line1 : outputSparse) {
+                String[] data = line1.split(",");
+                writer.writeNext(data);
+            }
+
+            writer.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
+        System.out.println(matrix.searchForValue(999));
 
     }
 
