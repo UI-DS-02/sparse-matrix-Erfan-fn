@@ -271,4 +271,56 @@
 
 
         }
+
+        //get next in Col list with the Row
+        public Node getNextInColWithRow(int row)
+        {
+            for (int i = row; i <this.size ; i++) {
+
+                if (this.getInColWithRow(i)!=null && this.getInColWithRow(i).getRow()!=row)
+                {
+                    return this.getInColWithRow(i);
+                }
+            }
+            return null;
+        }
+
+        //get next in Row list with the column
+        public Node getNextInRowWithCol(int column)
+        {
+            for (int i = column; i <this.size ; i++) {
+
+                if (this.getInRowWithCol(i)!=null && this.getInRowWithCol(i).getColumn()!=column)
+                {
+                       return this.getInRowWithCol(i);
+                }
+            }
+            return null;
+        }
+
+        //get previous in Col list with the Row
+    public Node getPrevInColWithRow(int row)
+    {
+        for (int i = row; i >=0 ; i--) {
+
+            if (this.getInColWithRow(i)!=null && this.getInColWithRow(i).getRow()!=row)
+            {
+                return this.getInColWithRow(i);
+            }
+        }
+        return null;
+    }
+
+    //get previous in Row list with the column
+    public Node getPrevInRowWithCol(int column)
+    {
+        for (int i =column; i>=0 ; i--) {
+
+            if (this.getInRowWithCol(i)!=null && this.getInRowWithCol(i).getColumn()!=column)
+            {
+                return this.getInRowWithCol(i);
+            }
+        }
+        return null;
+    }
     }
