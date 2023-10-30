@@ -1,3 +1,138 @@
+import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+//--------------
+public class Matrix{
+    private SinglyLinkedList[]rowList;
+    private SinglyLinkedList[]ColList;
+    private int [][] compactMatrix;
+    private int [][] sparseMatrix;
+    private int compactSize;
+    private int rowSize;
+    private int ColSize;
+
+    public Matrix(int size,int rowSize,int colSize) {
+
+
+        this.compactSize=size/3;
+        this.rowSize=rowSize;
+        this.ColSize=colSize;
+        this.rowList=new SinglyLinkedList[rowSize];
+        this.ColList=new SinglyLinkedList[colSize];
+        newMatrixLinkedLists();
+    }
+
+    public void insertNode(int row, int column, int element)
+    {
+        this.rowList[row].add(element,row,column,true);
+        this.ColList[column].add(element,row,column,false);
+        updateSparseMatrix(row,column,element);
+        updateCompactMatrix();
+
+    }
+
+    public SinglyLinkedList[] getRowList() {
+        return rowList;
+    }
+
+    public void setRowList(SinglyLinkedList[] rowList) {
+        this.rowList = rowList;
+    }
+
+    public SinglyLinkedList[] getColList() {
+        return ColList;
+    }
+
+    public void setColList(SinglyLinkedList[] colList) {
+        ColList = colList;
+    }
+
+    public int[][] getCompactMatrix() {
+        return compactMatrix;
+    }
+
+    public int[][] getSparseMatrix() {
+        return sparseMatrix;
+    }
+
+    public void setSparseMatrix(int[][] sparseMatrix) {
+        this.sparseMatrix = sparseMatrix;
+    }
+
+    public void setCompactMatrix(int[][] compactMatrix) {
+        this.compactMatrix = compactMatrix;
+    }
+
+    public void updateSparseMatrix(int row,int col,int element)
+    {
+            this.sparseMatrix[row][col]=element;
+    }
+
+        public void updateCompactMatrix()
+    {
+        int index=0;
+        for (int i = 0; i <rowList.length ; i++) {
+            SinglyLinkedList.Node current=rowList[i].head;
+            for (int j = 0; j < rowList[i].size; j++)
+            {
+                if (current.element!=0){
+                    compactMatrix[index][0]=current.getRow();
+                    compactMatrix[index][1]=current.getColumn();
+                    compactMatrix[index][2]=current.getElement();
+                    index++;
+                }
+                    current=current.nextInRow;
+            }
+        }
+    }
+    private void newMatrixLinkedLists()
+    {
+        for (int i = 0; i < rowList.length ; i++) {
+            this.rowList[i]=new SinglyLinkedList();
+        }
+
+        for (int i = 0; i < ColList.length ; i++) {
+            this.ColList[i]=new SinglyLinkedList();
+        }
+        this.sparseMatrix=new int[rowSize][ColSize];
+        compactMatrix=new int [compactSize][3];
+    }
+
+    public void removeNode(int row, int column)
+    {
+        this.rowList[row].remove(row, column,true);
+        this.ColList[column].remove(row,column,false);
+        updateSparseMatrix(row,column,0);
+        updateCompactMatrix();
+    }
+
+    public boolean searchForValue(int value)//------------------------
+    {
+        for (int i = 0; i < this.rowList.length; i++) {
+            for (int j = 0; j <this.rowList[i].Size() ; j++) {
+                if (this.rowList[i].getInRowWithCol(j).getElement()==value){return true;}
+            }
+        }
+        return false;
+    }
+
+    public void updateValue(int row, int column, int element,boolean isRow)
+    {
+        if (isRow)
+        {
+            this.rowList[row].getInRowWithCol(column).setElement(element);
+        }
+
+        else
+        {
+            this.ColList[column].getInColWithRow(row).setElement(element);
+        }
+        updateSparseMatrix(row,column,element);
+        updateCompactMatrix();
+    }
+
     public  class SinglyLinkedList {
 
         private Node head;
