@@ -509,4 +509,67 @@ public class Matrix{
         }
 
     }
+
+    public String compactToString()
+    {
+        StringBuilder result = new StringBuilder();
+        String[] output;
+
+        for (int i = 0; i <this.compactSize ; i++) {
+            for (int j = 0; j <3 ; j++) {
+                if (compactMatrix[i][2]!=0)
+                {
+                    result.append(compactMatrix[i][j]);
+                    if (j!=2)
+                    {
+                        result.append(",");
+                    }
+                }
+            }
+            if (i+1<this.compactSize)
+            {
+                if (compactMatrix[i+1][2]!=0){
+                    result.append('\n');
+                }
+            }
+            output=result.toString().split(",");
+            // first create file object for file placed at location
+            // specified by filepath
+
+            try {
+                // create CSVWriter object filewriter object as parameter
+                CSVWriter writer = new CSVWriter(new FileWriter("output.csv"), ICSVWriter.DEFAULT_SEPARATOR,
+                        CSVWriter.NO_QUOTE_CHARACTER,
+                        '"',
+                        "\"\n");
+
+                // create a List which contains String array
+
+                writer.writeNext(output);
+
+                // closing writer connection
+                writer.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        return result.toString();
     }
+    public String sparseToString()
+    {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i <this.rowSize ; i++) {
+            for (int j = 0; j <ColSize ; j++) {
+                result.append(sparseMatrix[i][j]);
+            }
+            result.append('\n');
+        }
+        return result.toString();
+    }
+
+
+}
