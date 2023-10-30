@@ -126,6 +126,51 @@
                 size++;
             }
         }
+
+        public void removeFirstInRow() {
+
+            if (this.size>1)
+            {
+                head = this.head.nextInRow;
+                size--;
+            }
+            else
+            {
+                this.head.nextInRow=null;
+                this.head =null;
+                size--;
+            }
+        }
+
+        public void removeFirstInCol() {
+
+            if (this.size>1)
+            {
+                head = this.head.nextInColumn;
+                size--;
+            }
+            else
+            {
+                this.head.nextInColumn=null;
+                this.head =null;
+                size--;
+            }
+        }
+
+        public void removeLastInRow() {
+
+            tail = this.getPrevInRowWithCol(tail.getColumn());
+            tail.nextInRow = null;
+            size--;
+        }
+
+        public void removeLastInCol() {
+
+            tail = this.getPrevInColWithRow(tail.getRow());
+            tail.nextInColumn = null;
+            size--;
+        }
+
         public void add(int element,int row,int column,boolean isRow) {
 
             if (isRow)
@@ -178,6 +223,52 @@
                     addFirstInCol(element,row,column);
                 }
             }
+
+        }
+        //------------------------------------------------------------------
+
+        public void remove(int row,int column,boolean isRow) {
+
+
+            if (isRow) {
+
+                Node current = this.getInRowWithCol(column);
+                Node previousRow = this.getPrevInRowWithCol(column);
+                Node nextRow = this.getNextInRowWithCol(column);
+
+                if ((previousRow == null && nextRow != null) || size==1) {
+                    removeFirstInRow();
+                } else if (previousRow != null && nextRow == null) {
+                    removeLastInRow();
+                }
+                if (previousRow != null && nextRow != null) {
+
+                    previousRow.nextInRow = nextRow;
+                    current.nextInRow = null;
+                    size--;
+                }
+            }
+
+            else
+            {
+                Node current = this.getInColWithRow(row);
+                Node previousCol = this.getPrevInColWithRow(row);
+                Node nextCol = this.getNextInColWithRow(row);
+
+                if ((previousCol == null && nextCol != null) || size==1) {
+                    removeFirstInCol();
+                } else if (previousCol != null && nextCol == null) {
+                    removeLastInCol();
+                }
+                if (previousCol != null && nextCol != null) {
+
+                    previousCol.nextInColumn = nextCol;
+                    current.nextInColumn = null;
+                    size--;
+                }
+            }
+
+
 
         }
     }
