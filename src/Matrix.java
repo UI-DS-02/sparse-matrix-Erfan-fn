@@ -1,3 +1,8 @@
+    public  class SinglyLinkedList {
+
+        private Node head;
+        private Node tail;
+        private int size=0;
         public static class Node {
 
             private int row;
@@ -54,3 +59,18 @@
             }
 
         }
+
+
+        public int Size() {
+            return size;
+        }
+
+        public Node first() {
+            return this.head;
+        }
+
+        public Node last() {
+            return this.tail;
+        }
+
+    }
