@@ -323,4 +323,55 @@
         }
         return null;
     }
+
+
+        //get in the ColList
+        public Node getInColWithRow(int row)
+        {
+
+            Node current = this.head;
+            Node result = null;
+            if (current!=null){
+                while (current != null) {
+
+                    if (current.getRow()==row) {
+                        result = current;
+                        break;
+                    }
+                    current = current.nextInColumn;
+                }
+            }
+            if (this.head!=null)
+            {
+                if (this.head.getRow()==row){return current;}
+            }
+
+            return result;
+        }
+
+        //get in the RowList
+        public Node getInRowWithCol(int column)
+        {
+
+            Node current = this.head;
+            Node result = null;
+            if (current!=null){
+                while (current != null) {
+
+                    if (current.getColumn()==column) {
+                        result = current;
+                        break;
+                    }
+                    current = current.nextInRow;
+                }
+            }
+            if (this.head!=null)
+            {
+                if (this.head.getColumn()==column){return current;}
+            }
+
+            return result;
+        }
+
+    }
     }
